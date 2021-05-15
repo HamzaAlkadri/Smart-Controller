@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Relay Controller</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center;">Relay Controller</h1>
+    <h4 style="text-align: center;">Clicky Click Click</h4>
+    <table class="relayTable">
+        <tr>
+            <th>Relay 1</th>
+            <th>Relay 2</th>
+            <th>Relay 3</th>
+            <th>Relay 4</th>
+        </tr>
+            <tr>
+                <td><form action="/relay1" method="POST"><input type="submit" value="Toggle" name="relay1" id=""></form></td>
+                <td><form action="/relay2" method="POST"><input type="submit" value="Toggle" name="relay2" id=""></form></td>
+                <td><form action="/relay3" method="POST"><input type="submit" value="Toggle" name="relay3" id=""></form></td>
+                <td><form action="/relay4" method="POST"><input type="submit" value="Toggle" name="relay4" id=""></form></td>
+            </tr>
+            <tr class="relayState">
+                <td>
+                    {% if relayState1 == true %}
+                    <div class="off">Off</div>
+                    {% else %}
+                    <div class="on">On</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if relayState2 == true %}
+                    <div class="off">Off</div>
+                    {% else %}
+                    <div class="on">On</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if relayState3 == true %}
+                    <div class="off">Off</div>
+                    {% else %}
+                    <div class="on">On</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if relayState4 == true %}
+                    <div class="off">Off</div>
+                    {% else %}
+                    <div class="on">On</div>
+                    {% endif %}
+                </td>
+            </tr>
+    </table>
+    <!----------------------------------------------------------------------------------------------------------------------->
+    
+    <!----------------------------------------------------------------------------------------------------------------------->
+
+<!--
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content">
+        <p>Priority:</p> <br>
+        <input type="number" name="priority" id="priority">
+        <input type="submit" value="Add Task" name="" id="">
+    </form>
+</div>
+-->
+{% endblock %}
