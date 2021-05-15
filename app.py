@@ -23,7 +23,6 @@ relayState2 = True
 relayState3 = True
 relayState4 = True
 
-#helloasdasdasdsas
 
 ###################################################################################################################
 @app.route('/relay1', methods=['POST'])
