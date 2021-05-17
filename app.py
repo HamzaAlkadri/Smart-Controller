@@ -19,16 +19,7 @@ class Todo(db.Model):
 #Pyrebase setup tings
 import pyrebase
 
-config = {
-    "apiKey": "AIzaSyAnGxeUFx8QZXeZ2_Tjv0TXrnegeleUGbw",
-    "authDomain": "smart-controller-f5334.firebaseapp.com",
-    "databaseURL": "https://smart-controller-f5334-default-rtdb.firebaseio.com",
-    "projectId": "smart-controller-f5334",
-    "storageBucket": "smart-controller-f5334.appspot.com",
-    "messagingSenderId": "664144889758",
-    "appId": "1:664144889758:web:5112b6d87b5e7626e2788f",
-    "measurementId": "G-8R19GQ6H7X"
-}
+
 
 firebase = pyrebase.initialize_app(config)
 database=firebase.database()
