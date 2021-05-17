@@ -1,27 +1,52 @@
-#.\env\Scripts\activate.ps1#
+#.\env\Scripts\activate#
 #the starting key for the enviroment ya 7omar^#
+#Ctrl+Shift+P and then Terminal: Relaunch Active Terminal#to force reload
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
-
+relayState1 = True
+relayState2 = True
+relayState3 = True
+relayState4 = True
 class Todo(db.Model): 
     id = db.Column(db.Integer, primary_key= True)
     content = db.Column(db.String(200), nullable=False)
     priority = db.Column(db.Integer)
     date_created = db.Column(db.DateTime,default=datetime.utcnow)
+#Pyrebase setup tings
+import pyrebase
 
+config = {
+    "apiKey": "AIzaSyAnGxeUFx8QZXeZ2_Tjv0TXrnegeleUGbw",
+    "authDomain": "smart-controller-f5334.firebaseapp.com",
+    "databaseURL": "https://smart-controller-f5334-default-rtdb.firebaseio.com",
+    "projectId": "smart-controller-f5334",
+    "storageBucket": "smart-controller-f5334.appspot.com",
+    "messagingSenderId": "664144889758",
+    "appId": "1:664144889758:web:5112b6d87b5e7626e2788f",
+    "measurementId": "G-8R19GQ6H7X"
+}
+
+firebase = pyrebase.initialize_app(config)
+database=firebase.database()
+
+def stream_handler(message):
+    print(message) # put
+    global relayState1
+    if message["path"]=="/":
+        relayState1=message["path"]["relayState1"]
+    if message["path"]=="/relayState1":
+        relayState1=message["path"]["relayState1"]
+my_stream = database.child("/relays").stream(stream_handler)
 
 #  def __repr__(self): 
 #        return '<Task %r>' %self.id
 
 from flask import render_template, flash, redirect, url_for
-relayState1 = True
-relayState2 = True
-relayState3 = True
-relayState4 = True
+
 
 
 ###################################################################################################################
