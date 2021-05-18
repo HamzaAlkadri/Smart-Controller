@@ -4,6 +4,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from config import config
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
@@ -28,9 +29,9 @@ def stream_handler(message):
     print(message) # put
     global relayState1
     if message["path"]=="/":
-        relayState1=message["path"]["relayState1"]
+        relayState1=message["data"]['relayState1']
     if message["path"]=="/relayState1":
-        relayState1=message["path"]["relayState1"]
+        relayState1=message["data"]
 my_stream = database.child("/relays").stream(stream_handler)
 
 #  def __repr__(self): 
@@ -51,6 +52,7 @@ def relay1_toggle():
     else :
         message = '1on'
     print (message)
+    database.child('/relays').update({'relayState1':relayState1})
     return redirect ('/')
 @app.route('/relay2', methods=['POST'])
 def relay2_toggle():
@@ -108,4 +110,4 @@ def index():
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=8080)
