@@ -1,3 +1,5 @@
+#py -m venv env#
+#key for installing the env#
 #.\env\Scripts\activate#
 #the starting key for the enviroment ya 7omar^#
 #Ctrl+Shift+P and then Terminal: Relaunch Active Terminal#to force reload
@@ -24,15 +26,29 @@ import pyrebase
 
 firebase = pyrebase.initialize_app(config)
 database=firebase.database()
-
-def stream_handler(message):
-    print(message) # put
+#the magic yazeed did to make this thing work
+def stream_handler1(message):
+    print(message) 
     global relayState1
+    global relayState2
+    global relayState3
+    global relayState4
     if message["path"]=="/":
         relayState1=message["data"]['relayState1']
+        relayState2=message["data"]['relayState2']
+        relayState3=message["data"]['relayState3']
+        relayState4=message["data"]['relayState4']
     if message["path"]=="/relayState1":
         relayState1=message["data"]
-my_stream = database.child("/relays").stream(stream_handler)
+    elif message["path"]=="/relayState2":
+        relayState2=message["data"]
+    elif message["path"]=="/relayState3":
+        relayState3=message["data"]
+    elif message["path"]=="/relayState4":
+        relayState4=message["data"]
+my_stream = database.child("/relays").stream(stream_handler1)
+
+
 
 #  def __repr__(self): 
 #        return '<Task %r>' %self.id
@@ -52,8 +68,10 @@ def relay1_toggle():
     else :
         message = '1on'
     print (message)
+    #more magic yazeed did to make this work!
     database.child('/relays').update({'relayState1':relayState1})
     return redirect ('/')
+
 @app.route('/relay2', methods=['POST'])
 def relay2_toggle():
     global relayState2
@@ -64,7 +82,10 @@ def relay2_toggle():
     else :
         message = '2on'
     print (message)
+    #Hamza trying to make this thing work
+    database.child('/relays').update({'relayState2':relayState2})
     return redirect ('/')
+
 @app.route('/relay3', methods=['POST'])
 def relay3_toggle():
     global relayState3
@@ -75,7 +96,9 @@ def relay3_toggle():
     else :
         message = '3on'
     print (message)
+    database.child('/relays').update({'relayState3':relayState3})
     return redirect ('/')
+
 @app.route('/relay4', methods=['POST'])
 def relay4_toggle():
     global relayState4
@@ -86,6 +109,7 @@ def relay4_toggle():
     else :
         message = '4on'
     print (message)
+    database.child('/relays').update({'relayState4':relayState4})
     return redirect ('/')
 ###################################################################################################################
 @app.route('/', methods=['POST', 'GET'])
@@ -110,4 +134,4 @@ def index():
     
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='192.168.1.18', port=8080)
